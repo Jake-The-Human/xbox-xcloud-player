@@ -43,11 +43,11 @@ class xHomeTokenManager {
     loadTokens(){
         this.requestxHomeToken().then((tokens) => {
             this._tokenxHome = tokens.xHomeToken.data.gsToken
-            this._tokenxCloud = tokens.xCloudToken.data.gsToken
+            this._tokenxCloud = tokens.xCloudToken !== undefined ? tokens.xCloudToken.data.gsToken : ''
 
             if(this._tokenxHome !== null) {console.log('- xHome streaming capable.')} else {console.log('- not xHome streaming capable.')}
 
-            if(this._tokenxCloud !== null) {
+            if(tokens.xCloudToken !== undefined && this._tokenxCloud !== null && this._tokenxCloud !== '') {
                 console.log('- xCloud streaming capable.')
                 this._apiCloudClient = new ApiClient({ host: tokens.xCloudToken.getDefaultRegion().baseUri, token: this._tokenxCloud })
             } else {
